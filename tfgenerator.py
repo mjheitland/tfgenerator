@@ -33,6 +33,8 @@ def read_config_and_layers():
     return (config, layers)
 
 def write_backend_config(config):
+    project = config.get('project')
+    print(project)
     environments = config.get('environments', {})
     for env_name, env_data in environments.items():
         print(env_name)
@@ -44,6 +46,7 @@ def write_backend_config(config):
             print('Writing {}'.format(file_name))
             with save_open_w(file_name) as file:
                 file.write('#--- {}\n'.format(file_name))
+                file.write('project = "{}"\n'.format(project))
                 file.write('account = "{}"\n'.format(account))
                 file.write('region  = "{}"\n'.format(region_name))
 
@@ -51,6 +54,8 @@ def write_layers(config, layers):
     write_layer_0_tfstate(config)
 
 def write_layer_0_tfstate(config):
+    project = config.get('project')
+    print(project)
     environments = config.get('environments', {})
     for env_name, env_data in environments.items():
         print(env_name)
@@ -62,6 +67,7 @@ def write_layer_0_tfstate(config):
             print('Writing {}'.format(file_name))
             with save_open_w(file_name) as file:
                 file.write('#--- {}\n'.format(file_name))
+                file.write('project = "{}"\n'.format(project))
                 file.write('account = "{}"\n'.format(account))
                 file.write('region  = "{}"\n'.format(region_name))
 

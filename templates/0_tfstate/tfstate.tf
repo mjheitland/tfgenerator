@@ -15,6 +15,11 @@
 #--- Variables
 #-------------
 
+variable project {
+  description = "Project name is used as namespace for Terraform remote state and other resources."
+  type        = string
+}
+
 variable account {
   description = "AWS account"
   type        = string
@@ -36,7 +41,7 @@ variable region {
 #-------------
 
 resource "aws_s3_bucket" "tfstate_bucket" {
-  bucket = "tfstate-${var.account}-${var.region}"
+  bucket = "${var.project}-tfstate-${var.account}-${var.region}"
 
   # prevent accidental deletion of this bucket
   # (if you really have to destroy this bucket, change this value to false and reapply, then run destroy)
@@ -60,7 +65,7 @@ resource "aws_s3_bucket" "tfstate_bucket" {
 }
 
 resource "aws_dynamodb_table" "tfstate_table" {
-  name = "tfstate-${var.region}"
+  name = "${var.project}-tfstate-${var.region}"
   billing_mode = "PAY_PER_REQUEST"
   hash_key = "LockID"
   attribute {

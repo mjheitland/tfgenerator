@@ -1,6 +1,5 @@
 config:
-  project: myProject
-  namespace: myNamespace
+  project: myproject
   tags: 
     project: <project>
     environment: <environment>
