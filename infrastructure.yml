@@ -1,17 +1,15 @@
-configuration:
-  projectName: myProjectName
+config:
+  project: myProject
   environments:
     dev:
-      account: myDevAccount
+      account: 094033154904
       regions:
         eu-west-1:
           cidr: 10.0.0.0/16
-          purpose: dev
         ap-east-1:  
           cidr: 10.0.0.0/16
-          purpose: dev
     uat:
-      account: myUATAccount
+      account: 456
       regions:
         eu-west-1:
           cidr: 11.0.0.0/16

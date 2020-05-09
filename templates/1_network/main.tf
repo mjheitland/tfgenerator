@@ -1,2 +1,6 @@
-# 10_network/main.tf
-vpc_identifier = <vpc_identifier>
+#- 1_network/main.terraform
+
+provider "aws" {
+  region = var.region
+}
+

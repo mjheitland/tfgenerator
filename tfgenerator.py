@@ -15,11 +15,41 @@ def recursive_overwrite(src, dest):
             os.makedirs(dest)
         files = os.listdir(src)
         for f in files:
-            recursive_overwrite(os.path.join(src, f), os.path.join(dest, f))
+            if not f.endswith(".temp"):
+                recursive_overwrite(os.path.join(src, f), os.path.join(dest, f))
     else:
         shutil.copyfile(src, dest)
 
+def read_config_and_layers():
+    stream = open("./infrastructure.yml", "r")
+    infrastructure = yaml.load(stream, Loader = yaml.SafeLoader)
+    config = infrastructure.get('config')
+    layers = infrastructure.get('layers')
+    return (config, layers)
+
+def write_backend_config(config):
+    environments = config.get('environments', {})
+    for env_name, env_data in environments.items():
+        print(env_name)
+        account = env_data.get('account')
+        print(account)
+        regions = env_data.get('regions')
+        for region_name, region_data in regions.items():
+            file_name = './out/backend_configs/{}_{}.tfvars'.format(env_name, region_name)
+            print('Writing {}'.format(file_name))
+            with open(file_name, "w") as file:
+                file.write('#--- {}\n'.format(file_name))
+                file.write('account = {}\n'.format(account))
+                file.write('region  = {}\n'.format(region_name))
+
+def write_layers(config, layers):
+    print(config)
+    print(layers)
+
 def main():
+    config, layers = read_config_and_layers()
+    write_backend_config(config)
+    write_layers(config, layers)
     recursive_overwrite("templates", "out")
 
 if __name__ == "__main__":
