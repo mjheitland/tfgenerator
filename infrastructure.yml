@@ -1,35 +1,56 @@
 config:
   project: myProject
+  namespace: myNamespace
+  tags: 
+    project: <project>
+    environment: <environment>
+    owner: myOwner
+    tfversion: v0.12
   environments:
     dev:
       account: 094033154904
-      regions:
-        eu-west-1:
-          cidr: 10.0.0.0/16
-        ap-east-1:  
-          cidr: 10.0.0.0/16
     uat:
-      account: 456
-      regions:
-        eu-west-1:
-          cidr: 11.0.0.0/16
-          purpose: uat
-        ap-east-1:  
-          cidr: 12.0.0.0/16
-          purpose: uat
+      account: 012345678901
 layers:
+  0_tfstate:
+    environments:
+      dev:
+        regions:
+          - eu-west-1
+          - ap-east-1
+      uat:
+        regions:
+          - eu-west-1
+          - ap-east-1  
   1_network:  
     vpc1:
       vpcIdentifier: myVpc1
-      cidr: tfvars
+      cidr:
+        environments:
+          dev:
+            regions:
+              eu-west-1:
+                cidr: 10.0.0.0/16
+              ap-east-1:  
+                cidr: 11.0.0.0/16
+          uat:
+            regions:
+              eu-west-1:
+                cidr: 12.0.0.0/16
+              ap-east-1:  
+                cidr: 13.0.0.0/16
       subnets:
         private:
           az_subnets:
             - a 
             - b
+        public:
+          az_subnets:
+            - a 
+            - b
     vpc2:
       vpcIdentifier: myVpc2
-      cidr: tfvars
+      cidr: 10.0.0.0/16
       subnets:
         private:
           az_subnets:
@@ -38,4 +59,4 @@ layers:
             - c
   2_compute:
     instance_type:
-      tiny3
+      t3.micro

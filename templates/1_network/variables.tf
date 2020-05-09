@@ -1,4 +1,4 @@
-#--- 0_tfstate
+#--- 1_network/variables.tf
 
 variable account {
   description = "AWS account"

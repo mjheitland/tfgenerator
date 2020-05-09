@@ -1,9 +1,29 @@
-# 1_network
-# terraform init --backend-config=backend.hcl
+#--- 0_tfstate/tfstate.tf
+
+#--------------------------
+#--- Terraform remote state
+#--------------------------
+
+terraform {
+  backend "s3" {
+    key = "0_base"
+  }
+}
+
 
 #-------------
 #--- Variables
 #-------------
+
+variable account {
+  description = "AWS account"
+  type        = string
+}
+
+variable region {
+  description = "AWS region we are deploying to"
+  type        = string
+}
 
 
 #------------
@@ -19,9 +39,9 @@ resource "aws_s3_bucket" "tfstate_bucket" {
   bucket = "tfstate-${var.account}-${var.region}"
 
   # prevent accidental deletion of this bucket
-  # (if you really have to destroy this bucket, change this value to false and reapply)
+  # (if you really have to destroy this bucket, change this value to false and reapply, then run destroy)
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
   }
 
   # enable versioning so we can see the full revision history of our state file
