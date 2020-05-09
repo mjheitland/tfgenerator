@@ -1,0 +1,41 @@
+configuration:
+  projectName: myProjectName
+  environments:
+    dev:
+      account: myDevAccount
+      regions:
+        eu-west-1:
+          cidr: 10.0.0.0/16
+          purpose: dev
+        ap-east-1:  
+          cidr: 10.0.0.0/16
+          purpose: dev
+    uat:
+      account: myUATAccount
+      regions:
+        eu-west-1:
+          cidr: 11.0.0.0/16
+          purpose: uat
+        ap-east-1:  
+          cidr: 12.0.0.0/16
+          purpose: uat
+layers:
+  0_remoteState:
+  1_network:  
+    vpc1:
+      vpcIdentifier: myVpc1
+      cidr: tfvars
+      subnets:
+        private:
+          az_subnets:
+            - a 
+            - b
+    vpc2:
+      vpcIdentifier: myVpc2
+      cidr: tfvars
+      subnets:
+        private:
+          az_subnets:
+            - a 
+            - b
+            - c
