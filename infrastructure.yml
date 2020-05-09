@@ -9,19 +9,15 @@ config:
   environments:
     dev:
       account: 094033154904
+      regions:
+        - eu-west-1
+        - ap-east-1
     uat:
       account: 012345678901
+      regions:
+        - eu-west-1
+        - ap-east-1  
 layers:
-  0_tfstate:
-    environments:
-      dev:
-        regions:
-          - eu-west-1
-          - ap-east-1
-      uat:
-        regions:
-          - eu-west-1
-          - ap-east-1  
   1_network:  
     vpc1:
       vpcIdentifier: myVpc1

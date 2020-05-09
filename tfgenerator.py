@@ -39,7 +39,7 @@ def write_backend_config(config):
         account = env_data.get('account')
         print(account)
         regions = env_data.get('regions')
-        for region_name, region_data in regions.items():
+        for region_name in regions:
             file_name = './out/backend_configs/{}_{}.conf'.format(env_name, region_name)
             print('Writing {}'.format(file_name))
             with save_open_w(file_name) as file:
