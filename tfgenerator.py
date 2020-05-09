@@ -35,7 +35,7 @@ def write_backend_config(config):
         print(account)
         regions = env_data.get('regions')
         for region_name, region_data in regions.items():
-            file_name = './out/backend_configs/{}_{}.tfvars'.format(env_name, region_name)
+            file_name = './out/backend_configs/{}_{}.conf'.format(env_name, region_name)
             print('Writing {}'.format(file_name))
             with open(file_name, "w") as file:
                 file.write('#--- {}\n'.format(file_name))
