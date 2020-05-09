@@ -20,7 +20,6 @@ configuration:
           cidr: 12.0.0.0/16
           purpose: uat
 layers:
-  0_remoteState:
   1_network:  
     vpc1:
       vpcIdentifier: myVpc1
@@ -39,3 +38,6 @@ layers:
             - a 
             - b
             - c
+  2_compute:
+    instance_type:
+      tiny3

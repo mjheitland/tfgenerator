@@ -1,2 +1,2 @@
-# 0_remote_state/main.tf
+# 2_compute/main.tf
 vpc_identifier = <vpc_identifier>
