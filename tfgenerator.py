@@ -47,10 +47,11 @@ def write_layers(config, layers):
     print(layers)
 
 def main():
+    recursive_overwrite("templates", "out")
+
     config, layers = read_config_and_layers()
     write_backend_config(config)
     write_layers(config, layers)
-    recursive_overwrite("templates", "out")
 
 if __name__ == "__main__":
   main()
