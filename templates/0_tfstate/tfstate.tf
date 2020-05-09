@@ -4,11 +4,11 @@
 #--- Terraform remote state
 #--------------------------
 
-terraform {
-  backend "s3" {
-    key = "0_base"
-  }
-}
+# terraform {
+#  backend "s3" {
+#    key = "0_base"
+#  }
+# }
 
 
 #-------------
