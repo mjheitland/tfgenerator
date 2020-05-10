@@ -1,2 +1,3 @@
-# 1_network/main.tf
+#--- 1_network/vpc.tf ---
+
 vpc_identifier = <vpc_identifier>

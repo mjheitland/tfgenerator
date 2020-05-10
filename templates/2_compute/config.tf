@@ -1,8 +1,16 @@
-#--- config.tf ---
+#--- 2_compute/config.tf ---
 
 terraform {
   required_version = ">= 0.12"
   required_providers {
-    aws = ">= 2.50.0"
+    aws = ">= 2.61.0"
   }
+  backend "s3" {
+    key = "2_compute"
+  }
+}
+
+provider "aws" {
+  region = var.region
+  profile = "default"
 }

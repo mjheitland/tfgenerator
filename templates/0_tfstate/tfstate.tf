@@ -1,16 +1,5 @@
 #--- 0_tfstate/tfstate.tf
 
-#--------------------------
-#--- Terraform remote state
-#--------------------------
-
-# terraform {
-#  backend "s3" {
-#    key = "0_base"
-#  }
-# }
-
-
 #-------------
 #--- Variables
 #-------------
@@ -30,18 +19,22 @@ variable region {
   type        = string
 }
 
+variable bucket {
+  description = "Name of S3 bucket to store Terraform's remote state"
+  type        = string
+}
 
-#------------
-#--- Provider
-#------------
-
+variable table {
+  description = "Name of DynamoDB table to lock Terraform's deployments"
+  type        = "string"
+}
 
 #-------------
 #--- Resources
 #-------------
 
 resource "aws_s3_bucket" "tfstate_bucket" {
-  bucket = "${var.project}-tfstate-${var.account}-${var.region}"
+  bucket = var.bucket
 
   # prevent accidental deletion of this bucket
   # (if you really have to destroy this bucket, change this value to false and reapply, then run destroy)
@@ -65,7 +58,7 @@ resource "aws_s3_bucket" "tfstate_bucket" {
 }
 
 resource "aws_dynamodb_table" "tfstate_table" {
-  name = "${var.project}-tfstate-${var.region}"
+  name = var.table
   billing_mode = "PAY_PER_REQUEST"
   hash_key = "LockID"
   attribute {

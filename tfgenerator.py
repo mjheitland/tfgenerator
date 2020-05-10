@@ -32,44 +32,31 @@ def read_config_and_layers():
     layers = infrastructure.get('layers')
     return (config, layers)
 
-def write_backend_config(config):
+def write_variables(config, file_format):
     project = config.get('project')
-    print(project)
     environments = config.get('environments', {})
     for env_name, env_data in environments.items():
-        print(env_name)
         account = env_data.get('account')
-        print(account)
         regions = env_data.get('regions')
         for region_name in regions:
-            file_name = './out/backend_configs/{}_{}.conf'.format(env_name, region_name)
+            file_name = file_format.format(env_name, region_name)
             print('Writing {}'.format(file_name))
             with save_open_w(file_name) as file:
                 file.write('#--- {}\n'.format(file_name))
-                file.write('project = "{}"\n'.format(project))
-                file.write('account = "{}"\n'.format(account))
-                file.write('region  = "{}"\n'.format(region_name))
+                file.write('project        = "{}"\n'.format(project))
+                file.write('account        = "{}"\n'.format(account))
+                file.write('region         = "{}"\n'.format(region_name))
+                file.write('bucket         = "{}-tfstate-{}-{}"\n'.format(project, account, region_name))
+                file.write('table          = "{}-tfstate-{}"\n'.format(project, region_name))
+
+def write_backend_config(config):
+    write_variables(config, './out/backend_configs/{}_{}.conf')
+
+def write_layer_0_tfstate(config):
+    write_variables(config, './out/0_tfstate/env_vars/{}_{}.tfvars')
 
 def write_layers(config, layers):
     write_layer_0_tfstate(config)
-
-def write_layer_0_tfstate(config):
-    project = config.get('project')
-    print(project)
-    environments = config.get('environments', {})
-    for env_name, env_data in environments.items():
-        print(env_name)
-        account = env_data.get('account')
-        print(account)
-        regions = env_data.get('regions')
-        for region_name in regions:
-            file_name = './out/0_tfstate/env_vars/{}_{}.tfvars'.format(env_name, region_name)
-            print('Writing {}'.format(file_name))
-            with save_open_w(file_name) as file:
-                file.write('#--- {}\n'.format(file_name))
-                file.write('project = "{}"\n'.format(project))
-                file.write('account = "{}"\n'.format(account))
-                file.write('region  = "{}"\n'.format(region_name))
 
 def main():
     config, layers = read_config_and_layers()
