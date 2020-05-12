@@ -39,6 +39,7 @@ def write_variables(config, file_format):
         account = env_data.get('account')
         regions = env_data.get('regions')
         for region_name in regions:
+            basic_tags = str(config.get('tags')).replace(':', ' =').replace('<project>', project).replace('<environment>', env_name)
             file_name = file_format.format(env_name, region_name)
             print('Writing {}'.format(file_name))
             with save_open_w(file_name) as file:
@@ -48,6 +49,7 @@ def write_variables(config, file_format):
                 file.write('region         = "{}"\n'.format(region_name))
                 file.write('bucket         = "{}-tfstate-{}-{}"\n'.format(project, account, region_name))
                 file.write('table          = "{}-tfstate-{}"\n'.format(project, region_name))
+                file.write('basic_tags     = {}\n'.format(basic_tags))
 
 def write_backend_config(config):
     write_variables(config, './out/backend_configs/{}_{}.conf')

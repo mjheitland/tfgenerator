@@ -26,8 +26,9 @@ variable bucket {
 
 variable table {
   description = "Name of DynamoDB table to lock Terraform's deployments"
-  type        = "string"
+  type        = string
 }
+
 
 #-------------
 #--- Resources

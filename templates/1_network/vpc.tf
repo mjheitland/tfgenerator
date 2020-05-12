@@ -1,3 +1,38 @@
 #--- 1_network/vpc.tf ---
 
-vpc_identifier = <vpc_identifier>
+#-------------
+#--- Variables
+#-------------
+
+
+#-------------
+#--- Resources
+#-------------
+
+resource "aws_vpc" "<vpc_identifier>" {
+  cidr_block = <cidr>
+  tags = merge(var.basic_tags,
+  { 
+    Name = "<vpc_identifier>"
+  })
+}
+
+
+#----------
+#--- Output
+#----------
+
+output "<vpc_identifier>_arn" {
+  value       = aws_vpc.<vpc_identifier>.arn
+  description = "The arn of the VPC <vpc_identifier>"
+}
+
+output "<vpc_identifier>_id" {
+  value       = aws_vpc.<vpc_identifier>.id
+  description = "The id of the VPC <vpc_identifier>"
+}
+
+output "<vpc_identifier>_cidr" {
+  value       = aws_vpc.<vpc_identifier>.cidr_block
+  description = "The cidr_block of the VPC <vpc_identifier>"
+}
