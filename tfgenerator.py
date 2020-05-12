@@ -57,8 +57,18 @@ def write_backend_config(config):
 def write_layer_0_tfstate(config):
     write_variables(config, './out/0_tfstate/env_vars/{}_{}.tfvars')
 
+def write_layer_1_network(config, layer):
+    vpcs = layer.get('vpcs', {})
+    for vpc_name, vpc_data in vpcs.items():
+        print(vpc_name)
+        source = './templates/1_network/vpc.temp'
+        target = './out/1_network/{}.tf'.format(vpc_name)
+        shutil.copyfile(source, target)
+        print('create file {}'.format(target))
+
 def write_layers(config, layers):
     write_layer_0_tfstate(config)
+    write_layer_1_network(config, layers.get('1_network'))
 
 def main():
     config, layers = read_config_and_layers()
