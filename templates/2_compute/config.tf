@@ -14,3 +14,13 @@ provider "aws" {
   region = var.region
   profile = "default"
 }
+
+# access remote state of tf_networking
+data "terraform_remote_state" "1_network" {
+  backend = "s3"
+  config = {
+    bucket = var.bucket
+    key = "1_network"
+    region = var.region
+  }
+}
